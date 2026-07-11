@@ -1,10 +1,12 @@
 import React from 'react';
 import { useStore } from '../store';
+import { getTranslations } from '../i18n';
 import { Button } from '../components/ui/Button';
 import { FileText, CheckCircle } from 'lucide-react';
 
 export default function Contracts() {
-  const { currentUser, contracts, lots, users, signContract } = useStore();
+  const { currentUser, contracts, lots, users, signContract, language } = useStore();
+  const t = getTranslations(language);
 
   if (!currentUser) return null;
 
@@ -12,10 +14,10 @@ export default function Contracts() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-navy uppercase tracking-wide">Digital Contracts</h1>
+      <h1 className="text-2xl font-bold text-navy uppercase tracking-wide">{t['contracts.title']}</h1>
 
       <div className="space-y-4">
-        {myContracts.length === 0 && <p className="text-slate-500">No contracts found.</p>}
+        {myContracts.length === 0 && <p className="text-slate-500">{t['contracts.none']}</p>}
         {myContracts.map(contract => {
           const lot = lots.find(l => l.id === contract.lotId);
           const counterpartyId = currentUser.role === 'Supplier' ? contract.exporterId : contract.supplierId;
@@ -30,8 +32,8 @@ export default function Contracts() {
                     <FileText className="h-6 w-6 text-navy" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-navy uppercase tracking-wide">Contract #{contract.id.toUpperCase()}</h3>
-                    <p className="text-xs text-slate-500">Lot: {lot?.name}</p>
+                    <h3 className="font-bold text-sm text-navy uppercase tracking-wide">{t['contracts.contract']} #{contract.id.toUpperCase()}</h3>
+                    <p className="text-xs text-slate-500">{t['contracts.lot']}: {lot?.name}</p>
                   </div>
                 </div>
                 <span className={`inline-flex items-center px-2 py-1 uppercase tracking-widest text-[9px] font-bold ${
@@ -45,19 +47,19 @@ export default function Contracts() {
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs bg-slate-50 p-4 border border-slate-100 rounded-sm">
                 <div>
-                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Counterparty</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">{t['contracts.counterparty']}</div>
                   <div className="font-bold text-navy">{counterparty?.companyName}</div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Total Volume</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">{t['contracts.totalVolume']}</div>
                   <div className="font-bold text-navy">{contract.agreedQuantity} Qtl</div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Agreed Price</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">{t['contracts.agreedPrice']}</div>
                   <div className="font-bold text-navy">{contract.agreedPrice.toLocaleString()} ETB/Qtl</div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Total Value</div>
+                  <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">{t['contracts.totalValue']}</div>
                   <div className="font-bold text-navy">{(contract.agreedQuantity * contract.agreedPrice).toLocaleString()} ETB</div>
                 </div>
               </div>
@@ -65,19 +67,19 @@ export default function Contracts() {
               <div className="flex justify-between items-center border-t border-slate-100 pt-4">
                 <div className="flex gap-4 text-xs font-bold text-slate-500">
                   <div className="flex items-center gap-1 uppercase">
-                    Supplier: {contract.supplierSigned ? <CheckCircle className="h-4 w-4 text-emerald-500"/> : 'Pending'}
+                    {t['contracts.supplier']}: {contract.supplierSigned ? <CheckCircle className="h-4 w-4 text-emerald-500"/> : t['contracts.pending']}
                   </div>
                   <div className="flex items-center gap-1 uppercase">
-                    Exporter: {contract.exporterSigned ? <CheckCircle className="h-4 w-4 text-emerald-500"/> : 'Pending'}
+                    {t['contracts.exporter']}: {contract.exporterSigned ? <CheckCircle className="h-4 w-4 text-emerald-500"/> : t['contracts.pending']}
                   </div>
                 </div>
                 {!hasSigned && contract.status === 'Pending Signature' && (
                   <Button variant="gold" onClick={() => signContract(contract.id, currentUser.role as any)}>
-                    Apply e-Signature
+                    {t['contracts.sign']}
                   </Button>
                 )}
                 {hasSigned && (
-                  <Button variant="outline" disabled>Signed</Button>
+                  <Button variant="outline" disabled>{t['contracts.signed']}</Button>
                 )}
               </div>
             </div>

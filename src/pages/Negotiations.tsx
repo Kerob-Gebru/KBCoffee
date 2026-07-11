@@ -1,9 +1,11 @@
 import React from 'react';
 import { useStore } from '../store';
+import { getTranslations } from '../i18n';
 import { Button } from '../components/ui/Button';
 
 export default function Negotiations() {
-  const { currentUser, bids, lots, users, updateBidStatus, createContract } = useStore();
+  const { currentUser, bids, lots, users, updateBidStatus, createContract, language } = useStore();
+  const t = getTranslations(language);
 
   if (!currentUser) return null;
 
@@ -34,10 +36,10 @@ export default function Negotiations() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-navy uppercase tracking-wide">Negotiations & Bids</h1>
+      <h1 className="text-2xl font-bold text-navy uppercase tracking-wide">{t['nego.title']}</h1>
 
       <div className="space-y-4">
-        {relevantBids.length === 0 && <p className="text-slate-500">No active negotiations.</p>}
+        {relevantBids.length === 0 && <p className="text-slate-500">{t['nego.none']}</p>}
         {relevantBids.map(bid => {
           const lot = lots.find(l => l.id === bid.lotId);
           const counterpartyId = currentUser.role === 'Supplier' ? bid.exporterId : bid.supplierId;
@@ -56,18 +58,18 @@ export default function Negotiations() {
                   </span>
                   <span className="text-xs text-slate-500">{new Date(bid.timestamp).toLocaleDateString()}</span>
                 </div>
-                <h3 className="font-bold text-sm uppercase text-navy line-clamp-1">Lot: {lot?.name || bid.lotId}</h3>
-                <p className="text-xs text-slate-600 mt-1">Offered by <span className="font-bold">{counterparty?.name}</span> ({counterparty?.companyName})</p>
+                <h3 className="font-bold text-sm uppercase text-navy line-clamp-1">{t['nego.lot']}: {lot?.name || bid.lotId}</h3>
+                <p className="text-xs text-slate-600 mt-1">{t['nego.offeredBy']} <span className="font-bold">{counterparty?.name}</span> ({counterparty?.companyName})</p>
                 <div className="mt-2 text-sm bg-slate-50 border border-slate-100 inline-block p-2">
-                  <span className="font-bold text-navy text-[10px] uppercase">Bid Details:</span> <br/>
+                  <span className="font-bold text-navy text-[10px] uppercase">{t['nego.bidDetails']}</span> <br/>
                   <span className="font-bold">{bid.quantity} Qtl</span> @ <span className="font-bold text-navy">{bid.price.toLocaleString()} ETB/Qtl</span>
                 </div>
               </div>
 
               {currentUser.role === 'Supplier' && bid.status === 'Pending' && (
                 <div className="flex gap-2 w-full md:w-auto">
-                  <Button size="sm" variant="outline" className="flex-1" onClick={() => handleDecline(bid.id)}>Decline</Button>
-                  <Button size="sm" variant="default" className="flex-1" onClick={() => handleAccept(bid.id)}>Accept & Contract</Button>
+                  <Button size="sm" variant="outline" className="flex-1" onClick={() => handleDecline(bid.id)}>{t['nego.decline']}</Button>
+                  <Button size="sm" variant="default" className="flex-1" onClick={() => handleAccept(bid.id)}>{t['nego.accept']}</Button>
                 </div>
               )}
             </div>
