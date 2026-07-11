@@ -1,12 +1,12 @@
 import React from 'react';
 import { useStore } from '../../store';
-import { translations } from '../../i18n';
+import { getTranslations } from '../../i18n';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Coffee, FileSignature, DollarSign, TrendingUp, Inbox, FileText } from 'lucide-react';
 
 export default function ExporterDashboard() {
   const { currentUser, bids, contracts, language } = useStore();
-  const t = translations[language];
+  const t = getTranslations(language);
 
   if (!currentUser) return null;
 
