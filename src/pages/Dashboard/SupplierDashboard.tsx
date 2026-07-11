@@ -1,9 +1,11 @@
 import React from 'react';
 import { useStore } from '../../store';
+import { getTranslations } from '../../i18n';
 import { Package, Gavel, FileText, TrendingUp, Inbox } from 'lucide-react';
 
 export default function SupplierDashboard() {
-  const { currentUser, lots, bids, contracts } = useStore();
+  const { currentUser, lots, bids, contracts, language } = useStore();
+  const t = getTranslations(language);
   
   if (!currentUser) return null;
 
@@ -21,9 +23,9 @@ export default function SupplierDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-1">Welcome back, {currentUser.name}</h1>
+        <h1 className="text-3xl font-bold text-slate-900 mb-1">{t['header.welcomeBack']} {currentUser.name}</h1>
         <div className="flex items-center text-slate-500 text-sm">
-          <span>{currentUser.role}</span>
+          <span>{t[`role.${currentUser.role}`]}</span>
           <span className="mx-2">&middot;</span>
           <span>&mdash;</span>
         </div>
@@ -32,7 +34,7 @@ export default function SupplierDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
           <div>
-            <div className="text-slate-500 text-sm font-medium mb-1">Active Lots</div>
+            <div className="text-slate-500 text-sm font-medium mb-1">{t['dash.activeLots']}</div>
             <div className="text-2xl font-bold text-slate-900">{activeLots}</div>
           </div>
           <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-600">
@@ -42,7 +44,7 @@ export default function SupplierDashboard() {
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
           <div>
-            <div className="text-slate-500 text-sm font-medium mb-1">Incoming Bids</div>
+            <div className="text-slate-500 text-sm font-medium mb-1">{t['dash.incomingBids']}</div>
             <div className="text-2xl font-bold text-slate-900">{incomingBids}</div>
           </div>
           <div className="w-10 h-10 bg-yellow-50 rounded-lg flex items-center justify-center text-yellow-600">
@@ -52,7 +54,7 @@ export default function SupplierDashboard() {
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
           <div>
-            <div className="text-slate-500 text-sm font-medium mb-1">Pending Signatures</div>
+            <div className="text-slate-500 text-sm font-medium mb-1">{t['dash.pendingSignatures']}</div>
             <div className="text-2xl font-bold text-slate-900">{pendingSignatures}</div>
           </div>
           <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center text-orange-600">
@@ -62,7 +64,7 @@ export default function SupplierDashboard() {
 
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start justify-between">
           <div>
-            <div className="text-slate-500 text-sm font-medium mb-1">Total Revenue</div>
+            <div className="text-slate-500 text-sm font-medium mb-1">{t['dash.totalRevenueShort']}</div>
             <div className="text-2xl font-bold text-slate-900">{totalRevenue} ETB</div>
           </div>
           <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
@@ -75,7 +77,7 @@ export default function SupplierDashboard() {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-80">
           <div className="p-4 border-b border-slate-100 flex items-center gap-2">
             <FileText className="h-4 w-4 text-slate-600" />
-            <h2 className="font-bold text-slate-900">Recent Activity</h2>
+            <h2 className="font-bold text-slate-900">{t['dash.recentActivity']}</h2>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {myBids.length === 0 && myContracts.length === 0 ? (
@@ -83,7 +85,7 @@ export default function SupplierDashboard() {
                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                   <Inbox className="h-8 w-8 text-slate-400" />
                 </div>
-                <p className="text-slate-900 font-medium">No recent activity</p>
+                <p className="text-slate-900 font-medium">{t['dash.noRecentActivity']}</p>
               </div>
             ) : (
               [...myBids, ...myContracts].sort((a: any, b: any) => {
@@ -99,7 +101,7 @@ export default function SupplierDashboard() {
                 return (
                   <div key={item.id} className="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-slate-900 mb-0.5">{isBid ? `Bid: ${item.quantity} Qtl` : `Contract: ${item.agreedQuantity} Qtl`}</p>
+                      <p className="font-medium text-slate-900 mb-0.5">{isBid ? `${t['dash.bid']}: ${item.quantity} Qtl` : `${t['dash.contract']}: ${item.agreedQuantity} Qtl`}</p>
                       <p className="text-xs text-slate-500">{new Date(isBid ? item.timestamp : item.createdAt).toLocaleDateString()}</p>
                     </div>
                     <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColor}`}>
@@ -115,7 +117,7 @@ export default function SupplierDashboard() {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-80">
           <div className="p-4 border-b border-slate-100 flex items-center gap-2">
             <Gavel className="h-4 w-4 text-slate-600" />
-            <h2 className="font-bold text-slate-900">Incoming Bids</h2>
+            <h2 className="font-bold text-slate-900">{t['dash.incomingBids']}</h2>
           </div>
           <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
             {myBids.filter(b => b.status === 'Pending').length === 0 ? (
@@ -123,10 +125,10 @@ export default function SupplierDashboard() {
                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                   <Inbox className="h-8 w-8 text-slate-400" />
                 </div>
-                <p className="text-slate-900 font-medium">No pending bids</p>
+                <p className="text-slate-900 font-medium">{t['dash.noPendingBids']}</p>
               </>
             ) : (
-              <p className="text-slate-900 font-medium">You have {myBids.filter(b => b.status === 'Pending').length} pending bids.</p>
+              <p className="text-slate-900 font-medium">{t['dash.pendingBidsCount'].replace('{count}', String(myBids.filter(b => b.status === 'Pending').length))}</p>
             )}
           </div>
         </div>

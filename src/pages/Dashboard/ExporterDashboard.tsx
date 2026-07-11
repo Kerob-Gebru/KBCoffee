@@ -14,10 +14,10 @@ export default function ExporterDashboard() {
   const myContracts = contracts.filter(c => c.exporterId === currentUser.id);
 
   const stats = [
-    { label: 'Active Bids', value: myBids.filter(b => b.status === 'Pending').length, icon: TrendingUp, bg: 'bg-yellow-50', text: 'text-yellow-600' },
-    { label: 'Pending Signatures', value: myContracts.filter(c => c.status === 'Pending Signature').length, icon: FileSignature, bg: 'bg-orange-50', text: 'text-orange-600' },
-    { label: 'Completed Contracts', value: myContracts.filter(c => c.status === 'Active' || c.status === 'Completed').length, icon: Coffee, bg: 'bg-slate-100', text: 'text-slate-600' },
-    { label: 'Total Volume (Qtl)', value: myContracts.reduce((acc, c) => acc + c.agreedQuantity, 0), icon: DollarSign, bg: 'bg-green-50', text: 'text-green-600' },
+    { label: t['dash.activeBids'], value: myBids.filter(b => b.status === 'Pending').length, icon: TrendingUp, bg: 'bg-yellow-50', text: 'text-yellow-600' },
+    { label: t['dash.pendingSignatures'], value: myContracts.filter(c => c.status === 'Pending Signature').length, icon: FileSignature, bg: 'bg-orange-50', text: 'text-orange-600' },
+    { label: t['dash.completedContracts'], value: myContracts.filter(c => c.status === 'Active' || c.status === 'Completed').length, icon: Coffee, bg: 'bg-slate-100', text: 'text-slate-600' },
+    { label: t['dash.totalVolume'], value: myContracts.reduce((acc, c) => acc + c.agreedQuantity, 0), icon: DollarSign, bg: 'bg-green-50', text: 'text-green-600' },
   ];
 
   const chartData = [
@@ -32,9 +32,9 @@ export default function ExporterDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-1">Welcome back, {currentUser.name}</h1>
+        <h1 className="text-3xl font-bold text-slate-900 mb-1">{t['header.welcomeBack']} {currentUser.name}</h1>
         <div className="flex items-center text-slate-500 text-sm">
-          <span>{currentUser.role}</span>
+          <span>{t[`role.${currentUser.role}`]}</span>
           <span className="mx-2">&middot;</span>
           <span>&mdash;</span>
         </div>
@@ -56,7 +56,7 @@ export default function ExporterDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col h-80">
-          <h2 className="font-bold text-slate-900 mb-6">Price Transparency (Avg ETB/Qtl)</h2>
+          <h2 className="font-bold text-slate-900 mb-6">{t['dash.priceTransparency']}</h2>
           <div className="flex-1 min-h-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
@@ -73,7 +73,7 @@ export default function ExporterDashboard() {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-80">
           <div className="p-4 border-b border-slate-100 flex items-center gap-2">
             <FileText className="h-4 w-4 text-slate-600" />
-            <h2 className="font-bold text-slate-900">Recent Activity</h2>
+            <h2 className="font-bold text-slate-900">{t['dash.recentActivity']}</h2>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {myBids.length === 0 && myContracts.length === 0 ? (
@@ -81,7 +81,7 @@ export default function ExporterDashboard() {
                 <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
                   <Inbox className="h-8 w-8 text-slate-400" />
                 </div>
-                <p className="text-slate-900 font-medium">No recent activity</p>
+                <p className="text-slate-900 font-medium">{t['dash.noRecentActivity']}</p>
               </div>
             ) : (
               [...myBids, ...myContracts].sort((a: any, b: any) => {
@@ -97,7 +97,7 @@ export default function ExporterDashboard() {
                 return (
                   <div key={item.id} className="bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center justify-between">
                     <div>
-                      <p className="font-medium text-slate-900 mb-0.5">{isBid ? `Bid: ${item.quantity} Qtl` : `Contract: ${item.agreedQuantity} Qtl`}</p>
+                      <p className="font-medium text-slate-900 mb-0.5">{isBid ? `${t['dash.bid']}: ${item.quantity} Qtl` : `${t['dash.contract']}: ${item.agreedQuantity} Qtl`}</p>
                       <p className="text-xs text-slate-500">{new Date(isBid ? item.timestamp : item.createdAt).toLocaleDateString()}</p>
                     </div>
                     <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColor}`}>

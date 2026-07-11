@@ -50,18 +50,18 @@ export default function Marketplace() {
       <div className="w-full md:w-64 flex-shrink-0 space-y-6 bg-white p-5 rounded-lg border border-slate-200 shadow-sm h-fit">
         <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
           <Filter className="h-5 w-5 text-navy" />
-          <h2 className="font-bold text-slate-900 uppercase tracking-wide">Filters</h2>
+          <h2 className="font-bold text-slate-900 uppercase tracking-wide">{t['market.filters']}</h2>
         </div>
         
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">Origin / Region</label>
+            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">{t['market.originRegion']}</label>
             <select 
               className="w-full border border-slate-300 rounded-sm px-3 py-2 bg-white text-xs"
               value={regionFilter}
               onChange={(e) => setRegionFilter(e.target.value)}
             >
-              <option value="">All Regions</option>
+              <option value="">{t['market.filterRegion']}</option>
               <option value="Yirgacheffe">Yirgacheffe</option>
               <option value="Sidamo">Sidamo</option>
               <option value="Guji">Guji</option>
@@ -70,13 +70,13 @@ export default function Marketplace() {
           </div>
 
           <div>
-            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">Processing Method</label>
+            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">{t['market.processingMethod']}</label>
             <select 
               className="w-full border border-slate-300 rounded-sm px-3 py-2 bg-white text-xs"
               value={processingFilter}
               onChange={(e) => setProcessingFilter(e.target.value)}
             >
-              <option value="">All Methods</option>
+              <option value="">{t['market.allMethods']}</option>
               <option value="Washed">Washed</option>
               <option value="Natural">Natural</option>
               <option value="Honey">Honey</option>
@@ -84,23 +84,23 @@ export default function Marketplace() {
           </div>
 
           <div>
-            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">Grade</label>
+            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">{t['market.grade']}</label>
             <select 
               className="w-full border border-slate-300 rounded-sm px-3 py-2 bg-white text-xs"
               value={gradeFilter}
               onChange={(e) => setGradeFilter(e.target.value)}
             >
-              <option value="">All Grades</option>
-              <option value="1">Grade 1</option>
-              <option value="2">Grade 2</option>
-              <option value="3">Grade 3</option>
-              <option value="4">Grade 4</option>
-              <option value="5">Grade 5</option>
+              <option value="">{t['market.filterGrade']}</option>
+              <option value="1">{t['market.grade']} 1</option>
+              <option value="2">{t['market.grade']} 2</option>
+              <option value="3">{t['market.grade']} 3</option>
+              <option value="4">{t['market.grade']} 4</option>
+              <option value="5">{t['market.grade']} 5</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">Max Price (ETB)</label>
+            <label className="text-xs font-bold uppercase text-slate-500 mb-1 block">{t['market.maxPrice']}</label>
             <div className="flex items-center justify-between text-xs text-navy font-bold mb-1">
               <span>0</span>
               <span>{priceRange.toLocaleString()}</span>
@@ -124,7 +124,7 @@ export default function Marketplace() {
                 onChange={(e) => setCertifiedOnly(e.target.checked)}
                 className="rounded text-navy focus:ring-navy"
               />
-              <span className="text-sm font-medium text-slate-700">Farm Certified Only</span>
+              <span className="text-sm font-medium text-slate-700">{t['market.certifiedOnly']}</span>
             </label>
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function Marketplace() {
                 )}
                 {lot.qualityBadge && (
                   <div className="absolute top-2 right-2 bg-emerald-500 text-white text-[10px] px-2 py-1 rounded-sm font-bold uppercase shadow-sm">
-                    Certified
+                    {t['market.certified']}
                   </div>
                 )}
               </div>
@@ -170,7 +170,7 @@ export default function Marketplace() {
                 <p className="text-xs text-slate-500 mb-4 flex flex-wrap gap-1 items-center">
                   <span className="bg-slate-100 px-2 py-0.5 rounded-sm">{lot.region}</span>
                   <span className="bg-slate-100 px-2 py-0.5 rounded-sm">{lot.processingMethod}</span>
-                  <span className="bg-slate-100 px-2 py-0.5 rounded-sm">Grade {lot.grade}</span>
+                  <span className="bg-slate-100 px-2 py-0.5 rounded-sm">{t['market.grade']} {lot.grade}</span>
                 </p>
                 
                 <div className="mt-auto pt-4 border-t border-slate-100 flex items-end justify-between">
@@ -191,8 +191,8 @@ export default function Marketplace() {
           {filteredLots.length === 0 && (
             <div className="col-span-full py-12 text-center bg-white rounded-lg border border-slate-200 border-dashed">
               <Coffee className="h-12 w-12 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-lg font-medium text-slate-900">No lots found</h3>
-              <p className="text-slate-500 mt-1">Try adjusting your filters or search term.</p>
+              <h3 className="text-lg font-medium text-slate-900">{t['market.noLots']}</h3>
+              <p className="text-slate-500 mt-1">{t['market.noLotsHint']}</p>
             </div>
           )}
         </div>
