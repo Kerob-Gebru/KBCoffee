@@ -3,6 +3,8 @@ import { useStore } from '../store';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { UserPlus, Coffee, Building2, ClipboardCheck, Mail, Lock, User, Briefcase } from 'lucide-react';
+import { signInWithGoogle } from '../lib/firebase';
+import { GoogleIcon } from '../components/ui/GoogleIcon';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -14,6 +16,31 @@ export default function Register() {
   const [error, setError] = useState('');
   const { registerUser, login, users } = useStore();
   const navigate = useNavigate();
+
+  const handleGoogleRegister = async () => {
+    setError('');
+    try {
+      const profile = await signInWithGoogle();
+      const existingUser = users.find(u => u.email === profile.email);
+      if (existingUser) {
+        login(profile.email);
+        navigate('/dashboard');
+        return;
+      }
+      await registerUser({
+        name: profile.name,
+        companyName: formData.companyName || 'Unknown Company',
+        email: profile.email,
+        role: formData.role as any,
+        kybDocuments: ['pending.pdf']
+      });
+      alert('Registration successful. KYB documents pending admin review.');
+      navigate('/login');
+    } catch (err: any) {
+      if (err.code === 'auth/popup-closed-by-user') return;
+      setError(err.message || 'Google sign-in failed');
+    }
+  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,6 +177,21 @@ export default function Register() {
             Create account
           </Button>
         </form>
+
+        <div className="my-6 flex items-center gap-3">
+          <div className="flex-1 h-px bg-slate-200" />
+          <span className="text-xs uppercase text-slate-400">or</span>
+          <div className="flex-1 h-px bg-slate-200" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleRegister}
+          className="w-full flex items-center justify-center gap-3 py-2.5 border border-slate-200 rounded-lg font-medium text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+        >
+          <GoogleIcon className="h-5 w-5" />
+          Sign up with Google
+        </button>
       </div>
 
       <div className="mt-8 text-center text-sm text-slate-500">

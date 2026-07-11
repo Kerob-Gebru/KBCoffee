@@ -3,12 +3,31 @@ import { useStore } from '../store';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { LogIn, Mail, Lock } from 'lucide-react';
+import { signInWithGoogle } from '../lib/firebase';
+import { GoogleIcon } from '../components/ui/GoogleIcon';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const { login, users } = useStore();
   const navigate = useNavigate();
+
+  const handleGoogleLogin = async () => {
+    setError('');
+    try {
+      const profile = await signInWithGoogle();
+      const existingUser = users.find(u => u.email === profile.email);
+      if (!existingUser) {
+        setError('No account found for this Google account. Please sign up first.');
+        return;
+      }
+      login(profile.email);
+      navigate('/dashboard');
+    } catch (err: any) {
+      if (err.code === 'auth/popup-closed-by-user') return;
+      setError(err.message || 'Google sign-in failed');
+    }
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +114,21 @@ export default function Login() {
             Log in
           </Button>
         </form>
+
+        <div className="my-6 flex items-center gap-3">
+          <div className="flex-1 h-px bg-slate-200" />
+          <span className="text-xs uppercase text-slate-400">or</span>
+          <div className="flex-1 h-px bg-slate-200" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-3 py-2.5 border border-slate-200 rounded-lg font-medium text-sm text-slate-700 hover:bg-slate-50 transition-colors"
+        >
+          <GoogleIcon className="h-5 w-5" />
+          Sign in with Google
+        </button>
       </div>
 
       <div className="mt-8 text-center text-sm text-slate-500">
