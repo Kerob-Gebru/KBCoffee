@@ -52,14 +52,16 @@ export const useStore = create<AppState>((set, get) => ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
       });
-      if (res.ok) {
-        const newUser = await res.json();
-        set(state => ({
-          users: [...state.users, newUser]
-        }));
+      if (!res.ok) {
+        throw new Error(`Registration failed (${res.status})`);
       }
+      const newUser = await res.json();
+      set(state => ({
+        users: [...state.users, newUser]
+      }));
     } catch (e) {
       console.error("Failed to register user", e);
+      throw e;
     }
   },
   lots: [],
