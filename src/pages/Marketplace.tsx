@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useStore } from '../store';
-import { translations } from '../i18n';
+import { getTranslations } from '../i18n';
 import { Search, MapPin, Award, Scale, Coffee, Filter } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export default function Marketplace() {
   const { lots, language, currentUser, addBid } = useStore();
-  const t = translations[language];
+  const t = getTranslations(language);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [regionFilter, setRegionFilter] = useState('');

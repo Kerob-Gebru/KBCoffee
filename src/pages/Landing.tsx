@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../store';
-import { translations } from '../i18n';
+import { getTranslations } from '../i18n';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { 
@@ -10,7 +10,7 @@ import {
 
 export default function Landing() {
   const { language } = useStore();
-  const t = translations[language];
+  const t = getTranslations(language);
 
   return (
     <div className="w-full">
