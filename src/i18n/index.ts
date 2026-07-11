@@ -1,4 +1,4 @@
-export type Language = 'en' | 'am';
+import type { Language } from '../types';
 
 export const translations = {
   en: {
@@ -14,6 +14,40 @@ export const translations = {
     'nav.logout': 'Logout',
     'nav.login': 'Login',
     'nav.register': 'Register',
+    'nav.bids': 'Bids',
+    'nav.disputes': 'Disputes',
+    'nav.transactions': 'Transactions',
+    'nav.profile': 'Profile',
+    'nav.signOut': 'Sign Out',
+    'nav.signUp': 'Sign up',
+    'nav.logIn': 'Log in',
+
+    'header.welcomeBack': 'Welcome back,',
+    'header.notifications': 'Notifications',
+    'header.noNotifications': 'No notifications',
+
+    'auth.email': 'Email',
+    'auth.password': 'Password',
+    'auth.or': 'or',
+
+    'login.title': 'Welcome back',
+    'login.subtitle': 'Log in to your account',
+    'login.demoAccounts': 'Demo Accounts (Click to auto-fill):',
+    'login.forgotPassword': 'Forgot password?',
+    'login.submit': 'Log in',
+    'login.google': 'Sign in with Google',
+    'login.noAccount': "Don't have an account?",
+    'login.signUp': 'Sign up',
+
+    'register.title': 'Create your account',
+    'register.subtitle': 'Sign up to get started',
+    'register.iAmA': 'I am a...',
+    'register.fullName': 'Full Name',
+    'register.companyName': 'Company Name',
+    'register.submit': 'Create account',
+    'register.google': 'Sign up with Google',
+    'register.haveAccount': 'Already have an account?',
+    'register.logIn': 'Log in',
     
     'hero.title': 'The Digital Hub for Ethiopian Coffee Trade',
     'hero.subtitle': 'Connect directly with verified suppliers, exporters, and inspectors.',
@@ -57,6 +91,40 @@ export const translations = {
     'nav.logout': 'ውጣ',
     'nav.login': 'ግባ',
     'nav.register': 'ተመዝገብ',
+    'nav.bids': 'ጨረታዎች',
+    'nav.disputes': 'ክርክሮች',
+    'nav.transactions': 'ግብይቶች',
+    'nav.profile': 'መገለጫ',
+    'nav.signOut': 'ውጣ',
+    'nav.signUp': 'ተመዝገብ',
+    'nav.logIn': 'ግባ',
+
+    'header.welcomeBack': 'እንኳን ደህና መጡ፣',
+    'header.notifications': 'ማሳወቂያዎች',
+    'header.noNotifications': 'ማሳወቂያ የለም',
+
+    'auth.email': 'ኢሜይል',
+    'auth.password': 'የይለፍ ቃል',
+    'auth.or': 'ወይም',
+
+    'login.title': 'እንኳን ደህና መጡ',
+    'login.subtitle': 'ወደ መለያዎ ይግቡ',
+    'login.demoAccounts': 'የሙከራ መለያዎች (ለመሙላት ይጫኑ):',
+    'login.forgotPassword': 'የይለፍ ቃል ረሱ?',
+    'login.submit': 'ግባ',
+    'login.google': 'በGoogle ይግቡ',
+    'login.noAccount': 'መለያ የለዎትም?',
+    'login.signUp': 'ተመዝገብ',
+
+    'register.title': 'መለያዎን ይፍጠሩ',
+    'register.subtitle': 'ለመጀመር ይመዝገቡ',
+    'register.iAmA': 'እኔ ነኝ...',
+    'register.fullName': 'ሙሉ ስም',
+    'register.companyName': 'የኩባንያ ስም',
+    'register.submit': 'መለያ ፍጠር',
+    'register.google': 'በGoogle ይመዝገቡ',
+    'register.haveAccount': 'መለያ አለዎት?',
+    'register.logIn': 'ግባ',
     
     'hero.title': 'የኢትዮጵያ ቡና ንግድ ዲጂታል ማዕከል',
     'hero.subtitle': 'ከተረጋገጡ አቅራቢዎች፣ ላኪዎች እና ተቆጣጣሪዎች ጋር በቀጥታ ይገናኙ።',
@@ -88,3 +156,7 @@ export const translations = {
     'btn.sign': 'ውል ፈርም',
   }
 };
+
+export function getTranslations(lang: Language) {
+  return translations[lang === 'am' ? 'am' : 'en'];
+}
