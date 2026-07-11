@@ -16,7 +16,7 @@ export default function Register() {
     role: 'Supplier' as Role
   });
   const [error, setError] = useState('');
-  const { registerUser, login, users, language } = useStore();
+  const { registerUser, login, users, addToast, language } = useStore();
   const t = getTranslations(language);
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export default function Register() {
         role: formData.role,
         kybDocuments: ['pending.pdf']
       });
-      alert('Registration successful. KYB documents pending admin review.');
+      addToast('Registration successful. KYB documents pending admin review.');
       navigate('/login');
     } catch (err: any) {
       if (err.code === 'auth/popup-closed-by-user') return;
@@ -55,7 +55,7 @@ export default function Register() {
         role: formData.role,
         kybDocuments: ['pending.pdf']
       });
-      alert('Registration successful. KYB documents pending admin review.');
+      addToast('Registration successful. KYB documents pending admin review.');
       navigate('/login');
     } catch (err: any) {
       setError(err.message || 'Registration failed');
