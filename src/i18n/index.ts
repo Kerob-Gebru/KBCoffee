@@ -1,4 +1,4 @@
-export type Language = 'en' | 'am';
+import type { Language } from '../types';
 
 export const translations = {
   en: {
@@ -157,6 +157,6 @@ export const translations = {
   }
 };
 
-export function getTranslations(lang: string) {
+export function getTranslations(lang: Language) {
   return translations[lang === 'am' ? 'am' : 'en'];
 }
