@@ -24,7 +24,11 @@ export default function Register() {
       const profile = await signInWithGoogle();
       const existingUser = users.find(u => u.email === profile.email);
       if (existingUser) {
-        login(profile.email);
+        const result = login(profile.email);
+        if (!result.ok) {
+          setError(result.error || 'Unable to log in.');
+          return;
+        }
         navigate('/dashboard');
         return;
       }

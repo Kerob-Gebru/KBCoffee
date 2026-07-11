@@ -21,7 +21,11 @@ export default function Login() {
         setError('No account found for this Google account. Please sign up first.');
         return;
       }
-      login(profile.email);
+      const result = login(profile.email);
+      if (!result.ok) {
+        setError(result.error || 'Unable to log in.');
+        return;
+      }
       navigate('/dashboard');
     } catch (err: any) {
       if (err.code === 'auth/popup-closed-by-user') return;
@@ -36,7 +40,11 @@ export default function Login() {
       setError('User not found. Try one of the demo accounts.');
       return;
     }
-    login(email);
+    const result = login(email);
+    if (!result.ok) {
+      setError(result.error || 'Unable to log in.');
+      return;
+    }
     navigate('/dashboard');
   };
 

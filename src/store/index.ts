@@ -10,7 +10,7 @@ interface AppState {
   language: Language;
   setLanguage: (lang: Language) => void;
   currentUser: User | null;
-  login: (email: string) => void;
+  login: (email: string) => { ok: boolean; error?: string };
   logout: () => void;
   users: User[];
   registerUser: (user: Omit<User, 'id' | 'status'>) => Promise<void>;
@@ -41,7 +41,17 @@ export const useStore = create<AppState>((set, get) => ({
   currentUser: null,
   login: (email) => {
     const user = get().users.find(u => u.email === email);
-    if (user) set({ currentUser: user });
+    if (!user) {
+      return { ok: false, error: 'User not found.' };
+    }
+    if (user.status === 'Suspended') {
+      return { ok: false, error: 'This account has been suspended.' };
+    }
+    if (user.status === 'Pending') {
+      return { ok: false, error: 'This account is pending admin review.' };
+    }
+    set({ currentUser: user });
+    return { ok: true };
   },
   logout: () => set({ currentUser: null }),
   users: [],
