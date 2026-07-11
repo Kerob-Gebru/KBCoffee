@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "companyName": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["Supplier", "Exporter", "Inspector", "Admin"] },
+        "status": { "type": "string" },
+        "kybDocuments": { "type": "array" }
+      },
+      "required": ["name", "email", "role"]
+    },
+    "Lot": {
+      "title": "Lot",
+      "description": "Coffee lot",
+      "type": "object",
+      "properties": {
+        "supplierId": { "type": "string" },
+        "name": { "type": "string" },
+        "region": { "type": "string" },
+        "processingMethod": { "type": "string" },
+        "grade": { "type": "number" },
+        "quantity": { "type": "number" },
+        "price": { "type": "number" },
+        "harvestSeason": { "type": "string" },
+        "availableFrom": { "type": "string" },
+        "photos": { "type": "array" },
+        "qualityDocuments": { "type": "array" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "expiryDate": { "type": "string" },
+        "qualityBadge": { "type": "boolean" }
+      },
+      "required": ["supplierId", "name"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User notification",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "message": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "type": { "type": "string", "enum": ["dispute", "contract", "message", "general"] }
+      },
+      "required": ["userId", "message", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "lots/{lotId}": {
+      "schema": { "$ref": "#/entities/Lot" },
+      "description": "Coffee lots"
+    },
+    "notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "User notifications"
+    }
+  }
+}

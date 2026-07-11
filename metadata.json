@@ -1,0 +1,6 @@
+{
+  "name": "KBCoffeeLink",
+  "description": "BirrBeans B2B digital marketplace for Ethiopian coffee trading.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

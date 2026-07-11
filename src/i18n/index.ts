@@ -1,0 +1,90 @@
+export type Language = 'en' | 'am';
+
+export const translations = {
+  en: {
+    'nav.dashboard': 'Dashboard',
+    'nav.marketplace': 'Marketplace',
+    'nav.myLots': 'My Lots',
+    'nav.negotiations': 'Negotiations',
+    'nav.contracts': 'Contracts',
+    'nav.qualityReports': 'Quality Reports',
+    'nav.messages': 'Messages',
+    'nav.logistics': 'Logistics',
+    'nav.admin': 'Admin Console',
+    'nav.logout': 'Logout',
+    'nav.login': 'Login',
+    'nav.register': 'Register',
+    
+    'hero.title': 'The Digital Hub for Ethiopian Coffee Trade',
+    'hero.subtitle': 'Connect directly with verified suppliers, exporters, and inspectors.',
+    'hero.cta': 'Join the Marketplace',
+    
+    'market.title': 'Coffee Lot Marketplace',
+    'market.search': 'Search lots...',
+    'market.filterRegion': 'All Regions',
+    'market.filterGrade': 'All Grades',
+    'market.price': 'Price (ETB/Qtl)',
+    'market.quantity': 'Quantity (Qtl)',
+    'market.bid': 'Place Bid',
+    
+    'role.Supplier': 'Supplier',
+    'role.Exporter': 'Exporter',
+    'role.Inspector': 'Inspector',
+    'role.Admin': 'Admin',
+    
+    'dash.activeLots': 'Active Lots',
+    'dash.pendingContracts': 'Pending Contracts',
+    'dash.totalRevenue': 'Total Revenue (ETB)',
+    'dash.totalSpent': 'Total Spent (ETB)',
+    'dash.avgPrice': 'Avg Price',
+    'dash.recentBids': 'Recent Bids',
+    
+    'btn.accept': 'Accept',
+    'btn.decline': 'Decline',
+    'btn.counter': 'Counter',
+    'btn.sign': 'Sign Contract',
+  },
+  am: {
+    'nav.dashboard': 'ዳሽቦርድ',
+    'nav.marketplace': 'ገበያ',
+    'nav.myLots': 'የእኔ ምርቶች',
+    'nav.negotiations': 'ድርድር',
+    'nav.contracts': 'ውሎች',
+    'nav.qualityReports': 'የጥራት ሪፖርቶች',
+    'nav.messages': 'መልዕክቶች',
+    'nav.logistics': 'ሎጅስቲክስ',
+    'nav.admin': 'አስተዳዳሪ',
+    'nav.logout': 'ውጣ',
+    'nav.login': 'ግባ',
+    'nav.register': 'ተመዝገብ',
+    
+    'hero.title': 'የኢትዮጵያ ቡና ንግድ ዲጂታል ማዕከል',
+    'hero.subtitle': 'ከተረጋገጡ አቅራቢዎች፣ ላኪዎች እና ተቆጣጣሪዎች ጋር በቀጥታ ይገናኙ።',
+    'hero.cta': 'ገበያውን ይቀላቀሉ',
+    
+    'market.title': 'የቡና ምርት ገበያ',
+    'market.search': 'ምርቶችን ይፈልጉ...',
+    'market.filterRegion': 'ሁሉም ክልሎች',
+    'market.filterGrade': 'ሁሉም ደረጃዎች',
+    'market.price': 'ዋጋ (ብር/ኩንታል)',
+    'market.quantity': 'ብዛት (ኩንታል)',
+    'market.bid': 'ዋጋ አቅርብ',
+    
+    'role.Supplier': 'አቅራቢ',
+    'role.Exporter': 'ላኪ',
+    'role.Inspector': 'ተቆጣጣሪ',
+    'role.Admin': 'አስተዳዳሪ',
+    
+    'dash.activeLots': 'ገባሪ ምርቶች',
+    'dash.pendingContracts': 'በመጠባበቅ ላይ ያሉ ውሎች',
+    'dash.totalRevenue': 'ጠቅላላ ገቢ (ብር)',
+    'dash.totalSpent': 'ጠቅላላ ወጪ (ብር)',
+    'dash.avgPrice': 'አማካይ ዋጋ',
+    'dash.recentBids': 'የቅርብ ጊዜ ጨረታዎች',
+    
+    'btn.accept': 'ተቀበል',
+    'btn.decline': 'አትቀበል',
+    'btn.counter': 'መልስ',
+    'btn.sign': 'ውል ፈርም',
+  }
+};
