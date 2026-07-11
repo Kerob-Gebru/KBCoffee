@@ -4,12 +4,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { LogIn, Mail, Lock } from 'lucide-react';
 import { signInWithGoogle } from '../lib/firebase';
+import { getTranslations } from '../i18n';
 import { GoogleIcon } from '../components/ui/GoogleIcon';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-  const { login, users } = useStore();
+  const { login, users, language } = useStore();
+  const t = getTranslations(language);
   const navigate = useNavigate();
 
   const handleGoogleLogin = async () => {
@@ -46,13 +48,13 @@ export default function Login() {
         <div className="mx-auto w-12 h-12 bg-navy text-white flex items-center justify-center rounded-xl mb-6">
           <LogIn className="h-6 w-6" />
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-2">Welcome back</h2>
-        <p className="text-slate-500">Log in to your account</p>
+        <h2 className="text-3xl font-bold text-slate-900 mb-2">{t['login.title']}</h2>
+        <p className="text-slate-500">{t['login.subtitle']}</p>
       </div>
       
       <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8">
         <div className="mb-6 space-y-2">
-          <p className="text-xs font-bold uppercase text-slate-500 mb-2">Demo Accounts (Click to auto-fill):</p>
+          <p className="text-xs font-bold uppercase text-slate-500 mb-2">{t['login.demoAccounts']}</p>
           <div className="grid grid-cols-1 gap-2">
             {users.slice(0, 4).map(u => (
               <button 
@@ -76,7 +78,7 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="mt-2 space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-1">Email</label>
+            <label className="block text-sm font-medium text-slate-900 mb-1">{t['auth.email']}</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <Mail className="h-5 w-5" />
@@ -94,8 +96,8 @@ export default function Login() {
 
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="block text-sm font-medium text-slate-900">Password</label>
-              <a href="#" className="text-xs text-navy hover:underline">Forgot password?</a>
+              <label className="block text-sm font-medium text-slate-900">{t['auth.password']}</label>
+              <a href="#" className="text-xs text-navy hover:underline">{t['login.forgotPassword']}</a>
             </div>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -111,13 +113,13 @@ export default function Login() {
           </div>
 
           <Button type="submit" className="w-full py-2.5 bg-navy hover:bg-navy/90 text-white rounded-lg font-medium text-sm transition-colors mt-2">
-            Log in
+            {t['login.submit']}
           </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
           <div className="flex-1 h-px bg-slate-200" />
-          <span className="text-xs uppercase text-slate-400">or</span>
+          <span className="text-xs uppercase text-slate-400">{t['auth.or']}</span>
           <div className="flex-1 h-px bg-slate-200" />
         </div>
 
@@ -127,12 +129,12 @@ export default function Login() {
           className="w-full flex items-center justify-center gap-3 py-2.5 border border-slate-200 rounded-lg font-medium text-sm text-slate-700 hover:bg-slate-50 transition-colors"
         >
           <GoogleIcon className="h-5 w-5" />
-          Sign in with Google
+          {t['login.google']}
         </button>
       </div>
 
       <div className="mt-8 text-center text-sm text-slate-500">
-        Don't have an account? <Link to="/register" className="text-navy font-bold hover:underline">Sign up</Link>
+        {t['login.noAccount']} <Link to="/register" className="text-navy font-bold hover:underline">{t['login.signUp']}</Link>
       </div>
     </div>
   );

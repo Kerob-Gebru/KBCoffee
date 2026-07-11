@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { UserPlus, Coffee, Building2, ClipboardCheck, Mail, Lock, User, Briefcase } from 'lucide-react';
 import { signInWithGoogle } from '../lib/firebase';
 import { Role } from '../types';
+import { getTranslations } from '../i18n';
 import { GoogleIcon } from '../components/ui/GoogleIcon';
 
 export default function Register() {
@@ -15,7 +16,8 @@ export default function Register() {
     role: 'Supplier' as Role
   });
   const [error, setError] = useState('');
-  const { registerUser, login, users } = useStore();
+  const { registerUser, login, users, language } = useStore();
+  const t = getTranslations(language);
   const navigate = useNavigate();
 
   const handleGoogleRegister = async () => {
@@ -66,8 +68,8 @@ export default function Register() {
         <div className="mx-auto w-12 h-12 bg-navy text-white flex items-center justify-center rounded-xl mb-6">
           <UserPlus className="h-6 w-6" />
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-2">Create your account</h2>
-        <p className="text-slate-500">Sign up to get started</p>
+        <h2 className="text-3xl font-bold text-slate-900 mb-2">{t['register.title']}</h2>
+        <p className="text-slate-500">{t['register.subtitle']}</p>
       </div>
 
       <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8">
@@ -79,7 +81,7 @@ export default function Register() {
 
         <form onSubmit={handleRegister} className="mt-2 space-y-5">
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-3">I am a...</label>
+            <label className="block text-sm font-medium text-slate-900 mb-3">{t['register.iAmA']}</label>
             <div className="grid grid-cols-3 gap-3">
               <button
                 type="button"
@@ -87,7 +89,7 @@ export default function Register() {
                 className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-colors ${formData.role === 'Supplier' ? 'border-navy bg-slate-50 text-navy' : 'border-slate-100 bg-white text-slate-600 hover:border-slate-200'}`}
               >
                 <Coffee className="h-6 w-6 mb-2" />
-                <span className="text-xs font-medium">Supplier</span>
+                <span className="text-xs font-medium">{t['role.Supplier']}</span>
               </button>
               <button
                 type="button"
@@ -95,7 +97,7 @@ export default function Register() {
                 className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-colors ${formData.role === 'Exporter' ? 'border-navy bg-slate-50 text-navy' : 'border-slate-100 bg-white text-slate-600 hover:border-slate-200'}`}
               >
                 <Building2 className="h-6 w-6 mb-2" />
-                <span className="text-xs font-medium">Exporter</span>
+                <span className="text-xs font-medium">{t['role.Exporter']}</span>
               </button>
               <button
                 type="button"
@@ -103,13 +105,13 @@ export default function Register() {
                 className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-colors ${formData.role === 'Inspector' ? 'border-navy bg-slate-50 text-navy' : 'border-slate-100 bg-white text-slate-600 hover:border-slate-200'}`}
               >
                 <ClipboardCheck className="h-6 w-6 mb-2" />
-                <span className="text-xs font-medium">Inspector</span>
+                <span className="text-xs font-medium">{t['role.Inspector']}</span>
               </button>
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-1">Full Name</label>
+            <label className="block text-sm font-medium text-slate-900 mb-1">{t['register.fullName']}</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <User className="h-5 w-5" />
@@ -126,7 +128,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-1">Company Name</label>
+            <label className="block text-sm font-medium text-slate-900 mb-1">{t['register.companyName']}</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <Briefcase className="h-5 w-5" />
@@ -143,7 +145,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-1">Email</label>
+            <label className="block text-sm font-medium text-slate-900 mb-1">{t['auth.email']}</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <Mail className="h-5 w-5" />
@@ -160,7 +162,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-900 mb-1">Password</label>
+            <label className="block text-sm font-medium text-slate-900 mb-1">{t['auth.password']}</label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                 <Lock className="h-5 w-5" />
@@ -175,13 +177,13 @@ export default function Register() {
           </div>
 
           <Button type="submit" className="w-full py-2.5 bg-navy hover:bg-navy/90 text-white rounded-lg font-medium text-sm transition-colors mt-2">
-            Create account
+            {t['register.submit']}
           </Button>
         </form>
 
         <div className="my-6 flex items-center gap-3">
           <div className="flex-1 h-px bg-slate-200" />
-          <span className="text-xs uppercase text-slate-400">or</span>
+          <span className="text-xs uppercase text-slate-400">{t['auth.or']}</span>
           <div className="flex-1 h-px bg-slate-200" />
         </div>
 
@@ -191,12 +193,12 @@ export default function Register() {
           className="w-full flex items-center justify-center gap-3 py-2.5 border border-slate-200 rounded-lg font-medium text-sm text-slate-700 hover:bg-slate-50 transition-colors"
         >
           <GoogleIcon className="h-5 w-5" />
-          Sign up with Google
+          {t['register.google']}
         </button>
       </div>
 
       <div className="mt-8 text-center text-sm text-slate-500">
-        Already have an account? <Link to="/login" className="text-navy font-bold hover:underline">Log in</Link>
+        {t['register.haveAccount']} <Link to="/login" className="text-navy font-bold hover:underline">{t['register.logIn']}</Link>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useStore } from '../../store';
-import { translations, Language } from '../../i18n';
+import { getTranslations } from '../../i18n';
 import { 
   Globe, LogOut, Menu, X, Bell, LayoutDashboard, Package, Gavel, 
   FileText, MessageSquare, ClipboardCheck, Truck, AlertTriangle, 
@@ -14,7 +14,7 @@ import { AppNotification } from '../../types';
 
 export function Layout() {
   const { currentUser, language, setLanguage, logout, notifications, setNotifications } = useStore();
-  const t = translations[language];
+  const t = getTranslations(language);
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
@@ -74,11 +74,11 @@ export function Layout() {
                 </button>
                 <div className="hidden sm:flex gap-2">
                   <Link to="/login">
-                    <Button variant="ghost" className="text-slate-600">Log in</Button>
+                    <Button variant="ghost" className="text-slate-600">{t['nav.logIn']}</Button>
                   </Link>
                   <Link to="/register">
                     <Button className="bg-navy hover:bg-navy/90 text-white border-none shadow-sm rounded-lg">
-                      Sign up
+                      {t['nav.signUp']}
                     </Button>
                   </Link>
                 </div>
@@ -96,15 +96,15 @@ export function Layout() {
 
   // Authenticated Layout (Sidebar)
   const sidebarLinks = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    ...(currentUser.role === 'Supplier' || currentUser.role === 'Admin' ? [{ label: 'My Lots', path: '/lots', icon: Package }] : []),
-    { label: 'Bids', path: '/negotiations', icon: Gavel },
-    { label: 'Contracts', path: '/contracts', icon: FileText },
-    { label: 'Messages', path: '/messages', icon: MessageSquare },
-    ...(currentUser.role === 'Inspector' || currentUser.role === 'Admin' ? [{ label: 'Quality Reports', path: '/quality', icon: ClipboardCheck }] : []),
-    { label: 'Logistics', path: '/logistics', icon: Truck },
-    { label: 'Disputes', path: '/disputes', icon: AlertTriangle },
-    { label: 'Transactions', path: '/transactions', icon: TrendingUp },
+    { label: t['nav.dashboard'], path: '/dashboard', icon: LayoutDashboard },
+    ...(currentUser.role === 'Supplier' || currentUser.role === 'Admin' ? [{ label: t['nav.myLots'], path: '/lots', icon: Package }] : []),
+    { label: t['nav.bids'], path: '/negotiations', icon: Gavel },
+    { label: t['nav.contracts'], path: '/contracts', icon: FileText },
+    { label: t['nav.messages'], path: '/messages', icon: MessageSquare },
+    ...(currentUser.role === 'Inspector' || currentUser.role === 'Admin' ? [{ label: t['nav.qualityReports'], path: '/quality', icon: ClipboardCheck }] : []),
+    { label: t['nav.logistics'], path: '/logistics', icon: Truck },
+    { label: t['nav.disputes'], path: '/disputes', icon: AlertTriangle },
+    { label: t['nav.transactions'], path: '/transactions', icon: TrendingUp },
   ];
 
   return (
@@ -154,7 +154,7 @@ export function Layout() {
             }`}
           >
             <Settings className="h-5 w-5" />
-            Profile
+            {t['nav.profile']}
           </Link>
         </div>
       </aside>
@@ -168,7 +168,7 @@ export function Layout() {
               <Menu className="h-6 w-6" />
             </button>
             <div className="text-sm font-medium text-slate-500">
-              Welcome back, {currentUser.name}
+              {t['header.welcomeBack']} {currentUser.name}
             </div>
           </div>
 
@@ -194,11 +194,11 @@ export function Layout() {
               {showNotifications && (
                 <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-slate-200 z-50">
                   <div className="p-3 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-lg">
-                    <h3 className="font-bold text-slate-900 text-sm">Notifications</h3>
+                    <h3 className="font-bold text-slate-900 text-sm">{t['header.notifications']}</h3>
                   </div>
                   <div className="max-h-96 overflow-y-auto">
                     {notifications.length === 0 ? (
-                      <div className="p-4 text-center text-slate-500 text-sm">No notifications</div>
+                      <div className="p-4 text-center text-slate-500 text-sm">{t['header.noNotifications']}</div>
                     ) : (
                       notifications.map(n => (
                         <div key={n.id} className={`p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors ${!n.read ? 'bg-blue-50/50' : ''}`}>
@@ -223,7 +223,7 @@ export function Layout() {
               className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-navy transition-colors"
             >
               <LogOut className="h-5 w-5" />
-              Sign Out
+              {t['nav.signOut']}
             </button>
           </div>
         </header>
@@ -277,7 +277,7 @@ export function Layout() {
                 }`}
               >
                 <Settings className="h-5 w-5" />
-                Profile
+                {t['nav.profile']}
               </Link>
             </div>
           </aside>
