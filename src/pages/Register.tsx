@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { UserPlus, Coffee, Building2, ClipboardCheck, Mail, Lock, User, Briefcase } from 'lucide-react';
 import { signInWithGoogle } from '../lib/firebase';
+import { Role } from '../types';
 import { GoogleIcon } from '../components/ui/GoogleIcon';
 
 export default function Register() {
@@ -11,7 +12,7 @@ export default function Register() {
     name: '',
     companyName: '',
     email: '',
-    role: 'Supplier'
+    role: 'Supplier' as Role
   });
   const [error, setError] = useState('');
   const { registerUser, login, users } = useStore();
@@ -31,7 +32,7 @@ export default function Register() {
         name: profile.name,
         companyName: formData.companyName || 'Unknown Company',
         email: profile.email,
-        role: formData.role as any,
+        role: formData.role,
         kybDocuments: ['pending.pdf']
       });
       alert('Registration successful. KYB documents pending admin review.');
@@ -49,7 +50,7 @@ export default function Register() {
         name: formData.name || formData.email.split('@')[0],
         companyName: formData.companyName || 'Unknown Company',
         email: formData.email,
-        role: formData.role as any,
+        role: formData.role,
         kybDocuments: ['pending.pdf']
       });
       alert('Registration successful. KYB documents pending admin review.');

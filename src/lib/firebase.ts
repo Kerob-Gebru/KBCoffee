@@ -1,14 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import firebaseConfig from '../../firebase-applet-config.json';
 
-// Web app config from firebase-applet-config.json
 const app = initializeApp({
-  apiKey: 'AIzaSyDB0dV81b8orwP3p9B7vOurxumMmxJUVp8',
-  authDomain: 'omega-cairn-r2t1j.firebaseapp.com',
-  projectId: 'omega-cairn-r2t1j',
-  storageBucket: 'omega-cairn-r2t1j.firebasestorage.app',
-  messagingSenderId: '128182076131',
-  appId: '1:128182076131:web:959efecde15329ba857bd6'
+  apiKey: firebaseConfig.apiKey,
+  authDomain: firebaseConfig.authDomain,
+  projectId: firebaseConfig.projectId,
+  storageBucket: firebaseConfig.storageBucket,
+  messagingSenderId: firebaseConfig.messagingSenderId,
+  appId: firebaseConfig.appId
 });
 
 export const auth = getAuth(app);
